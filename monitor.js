@@ -26,16 +26,16 @@ client.on('message', (topic, message) => {
     const tipoDado = partes[3]; // 'temp' ou 'status'
 
     if (tipoDado === 'status') {
-        // Lógica de Presença
+        // lógica de status on/off
         if (msgStr === 'OFFLINE') {
-            console.log(`\n🔴 [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} caiu!`);
+            console.log(`\n🔴 [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
         } else {
             console.log(`\n🟢 [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
         }
     } 
     
     else if (tipoDado === 'temp') {
-        // Sua lógica de Temperatura (JSON)
+        // 
         try {
             const dados = JSON.parse(msgStr);
             const idDoTopico = topic.split('/')[2]; 
@@ -45,7 +45,7 @@ client.on('message', (topic, message) => {
         console.log(`📍 Origem: ${idDoTopico.toUpperCase()}`);
         console.log(`🌡️  Temperatura: ${dados.temp}°C`);
         console.log(`📢 Status: ${dados.alerta}`);
-
+        //lógica de alerta
         if (dados.temp > 7) {
             console.log(`🚨 ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
         }
