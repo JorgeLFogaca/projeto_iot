@@ -12,7 +12,7 @@ const options = {
 
 const client = mqtt.connect(brokerUrl, options);
 
-const TOPICO = 'projeto_iot/cidade/sensor_esf1';
+const TOPICO = 'projeto_iot/cidade/+/temp';
 
 client.on('connect', () => {
     console.log('✅ Conectado ao HiveMQ via WebSockets!');
@@ -27,20 +27,22 @@ client.on('connect', () => {
 
 client.on('message', (topic, message) => {
     try {
-        // converte a mensagem recebida
         const dados = JSON.parse(message.toString());
+        
+        // Extrai 'sensor_esf1' ou 'sensor_esf2' direto da URL do tópico
+        const idDoTopico = topic.split('/')[2]; 
+        const localNome = dados.local || idDoTopico;
 
-        console.log(`----------------------------`);
-        console.log(`🌡️ Temp: ${dados.temp}°C `);
+        console.log(`------------------------------------------`);
+        console.log(`📍 Origem: ${idDoTopico.toUpperCase()}`);
+        console.log(`🌡️  Temperatura: ${dados.temp}°C`);
+        console.log(`📢 Status: ${dados.alerta}`);
 
         if (dados.temp > 7) {
-            console.log(`🚨 ALERTA CRÍTICO: ${dados.temp}°C!`);
-        } else {
-            console.log(`✅ Status: Normal.`);
+            console.log(`🚨 ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
         }
     } catch (error) {
-        // verificando se é um json
-        console.log(`⚠️ Mensagem ignorada (não é JSON): "${message.toString()}"`);
+        console.log(`⚠️ Erro ao processar JSON: ${message.toString()}`);
     }
 });
 
