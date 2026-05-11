@@ -12,25 +12,33 @@ const options = {
 
 const client = mqtt.connect(brokerUrl, options);
 
-const TOPICO = 'projeto_iot/cidade/+/temp';
+const TOPICO_GERAL = 'projeto_iot/cidade/#';
 
 client.on('connect', () => {
-    console.log('✅ Conectado ao HiveMQ via WebSockets!');
-    client.subscribe(TOPICO, (err) => {
-        if (!err) {
-            console.log(`📡 Monitorando: ${TOPICO}`);
-        }
-    });
+    console.log('✅ Monitorando Sensores e Status...');
+    client.subscribe(TOPICO_GERAL);
 });
 
-// lógica mensagem de alerta com verificação de json
-
 client.on('message', (topic, message) => {
-    try {
-        const dados = JSON.parse(message.toString());
-        
-        // Extrai 'sensor_esf1' ou 'sensor_esf2' direto da URL do tópico
-        const idDoTopico = topic.split('/')[2]; 
+    const msgStr = message.toString();
+    const partes = topic.split('/');
+    const sensorId = partes[2];
+    const tipoDado = partes[3]; // 'temp' ou 'status'
+
+    if (tipoDado === 'status') {
+        // Lógica de Presença
+        if (msgStr === 'OFFLINE') {
+            console.log(`\n🔴 [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} caiu!`);
+        } else {
+            console.log(`\n🟢 [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
+        }
+    } 
+    
+    else if (tipoDado === 'temp') {
+        // Sua lógica de Temperatura (JSON)
+        try {
+            const dados = JSON.parse(msgStr);
+            const idDoTopico = topic.split('/')[2]; 
         const localNome = dados.local || idDoTopico;
 
         console.log(`------------------------------------------`);
@@ -44,8 +52,5 @@ client.on('message', (topic, message) => {
     } catch (error) {
         console.log(`⚠️ Erro ao processar JSON: ${message.toString()}`);
     }
-});
-
-client.on('error', (err) => {
-    console.error('❌ Erro de conexão:', err);
+    }
 });
