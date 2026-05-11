@@ -1,12 +1,12 @@
 const mqtt = require('mqtt');
 
-// 1. URL alterada para protocolo WS (WebSocket) e porta 8000
+// protocolo ws na porta 8000
 const brokerUrl = 'ws://broker.hivemq.com:8000/mqtt';
 
-// 2. Opções de conexão com Client ID único
+// conexão com client id único
 const options = {
     clientId: 'monitor_node_' + Math.random().toString(16).substring(2, 8),
-    connectTimeout: 30 * 1000, // Aumenta para 30 segundos
+    connectTimeout: 30 * 1000, // 30 segundos para o handshake
     keepalive: 60,
 };
 
@@ -23,7 +23,7 @@ client.on('connect', () => {
     });
 });
 
-// O restante da lógica de mensagem (JSON.parse, Alerta) continua IGUAL
+// lógica mensagem de alerta com verificação de json
 
 client.on('message', (topic, message) => {
     try {
