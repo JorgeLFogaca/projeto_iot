@@ -32,13 +32,13 @@ client.on('message', (topic, message) => {
     if (tipoDado === 'status') {
         // lógica de status on/off
         if (msgStr === 'OFFLINE') {
-            console.log(`------------------------------------------`);
-            console.log(`\n🔴 [${timestamp}] [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
-            console.log(`------------------------------------------`);
+            console.log(`---------------------------------------------------------------------------------------------`);
+            console.log(`🔴 [${timestamp}] [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
+            console.log(`---------------------------------------------------------------------------------------------`);
         } else {
-            console.log(`------------------------------------------`);
-            console.log(`\n🟢 [${timestamp}] [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
-            console.log(`------------------------------------------`);
+            console.log(`---------------------------------------------------------------------------------------------`);
+            console.log(`🟢 [${timestamp}] [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
+            console.log(`---------------------------------------------------------------------------------------------`);
         }
     } 
     
@@ -50,17 +50,17 @@ client.on('message', (topic, message) => {
             const idDoTopico = topic.split('/')[2]; 
         const localNome = dados.local || idDoTopico;
 
-        console.log(`------------------------------------------`);
+        console.log(`---------------------------------------------------------------------------------------------`);
         console.log(`[${timestamp}]`);
         console.log(`📍 Origem: ${idDoTopico.toUpperCase()}`);
         console.log(`🌡️  Temperatura: ${dados.temp}°C`);
         console.log(`📢 Status: ${dados.alerta}`);
-        console.log(`------------------------------------------`);
+        console.log(`---------------------------------------------------------------------------------------------`);
         //lógica de alerta
         if (dados.temp > 7) {
-            console.log(`------------------------------------------`);
+            console.log(`---------------------------------------------------------------------------------------------`);
             console.log(`🚨 [${timestamp}] ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
-            console.log(`------------------------------------------`);
+            console.log(`---------------------------------------------------------------------------------------------`);
         }
     } catch (error) {
         console.log(`⚠️ Erro ao processar JSON: ${message.toString()}`);
