@@ -32,9 +32,13 @@ client.on('message', (topic, message) => {
     if (tipoDado === 'status') {
         // lógica de status on/off
         if (msgStr === 'OFFLINE') {
+            console.log(`------------------------------------------`);
             console.log(`\n🔴 [${timestamp}] [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
+            console.log(`------------------------------------------`);
         } else {
+            console.log(`------------------------------------------`);
             console.log(`\n🟢 [${timestamp}] [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
+            console.log(`------------------------------------------`);
         }
     } 
     
