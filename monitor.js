@@ -24,15 +24,20 @@ client.on('message', (topic, message) => {
     const partes = topic.split('/');
     const sensorId = partes[2];
     const tipoDado = partes[3]; // 'temp' ou 'status'
+    const agora = new Date();
+    const data = agora.toLocaleDateString('pt-BR');
+    const hora = agora.toLocaleTimeString('pt-BR');
+    const timestamp = `📅 ${data} 🕒 ${hora}`;
 
     if (tipoDado === 'status') {
         // lógica de status on/off
         if (msgStr === 'OFFLINE') {
-            console.log(`\n🔴 [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
+            console.log(`\n🔴 [${timestamp}] [ALERTA DE CONEXÃO] O sensor ${sensorId.toUpperCase()} está offline!`);
         } else {
-            console.log(`\n🟢 [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
+            console.log(`\n🟢 [${timestamp}] [SISTEMA] O sensor ${sensorId.toUpperCase()} está online.`);
         }
     } 
+    
     
     else if (tipoDado === 'temp') {
         // 
@@ -42,12 +47,13 @@ client.on('message', (topic, message) => {
         const localNome = dados.local || idDoTopico;
 
         console.log(`------------------------------------------`);
+        console.log(`[${timestamp}]`);
         console.log(`📍 Origem: ${idDoTopico.toUpperCase()}`);
         console.log(`🌡️  Temperatura: ${dados.temp}°C`);
         console.log(`📢 Status: ${dados.alerta}`);
         //lógica de alerta
         if (dados.temp > 7) {
-            console.log(`🚨 ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
+            console.log(`🚨 [${timestamp}] ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
         }
     } catch (error) {
         console.log(`⚠️ Erro ao processar JSON: ${message.toString()}`);
