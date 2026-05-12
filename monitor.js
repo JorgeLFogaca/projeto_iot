@@ -51,9 +51,12 @@ client.on('message', (topic, message) => {
         console.log(`📍 Origem: ${idDoTopico.toUpperCase()}`);
         console.log(`🌡️  Temperatura: ${dados.temp}°C`);
         console.log(`📢 Status: ${dados.alerta}`);
+        console.log(`------------------------------------------`);
         //lógica de alerta
         if (dados.temp > 7) {
+            console.log(`------------------------------------------`);
             console.log(`🚨 [${timestamp}] ALERTA ATIVO EM: ${localNome.toUpperCase()}`);
+            console.log(`------------------------------------------`);
         }
     } catch (error) {
         console.log(`⚠️ Erro ao processar JSON: ${message.toString()}`);
