@@ -1,0 +1,82 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial;
+    background:#111827;
+    color:white;
+}
+
+header{
+    background:#0f172a;
+    padding:20px;
+    text-align:center;
+    border-bottom:2px solid #1e293b;
+}
+
+main{
+    display:flex;
+    height:calc(100vh - 80px);
+}
+
+#sensores{
+    flex:2;
+    padding:20px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+    gap:20px;
+
+    overflow-y:auto;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:12px;
+    padding:20px;
+    cursor:pointer;
+
+    transition:0.2s;
+    border-left:6px solid #22c55e;
+}
+
+.card:hover{
+    transform:scale(1.02);
+}
+
+.offline{
+    border-left:6px solid #ef4444;
+}
+
+.alerta{
+    border-left:6px solid #f59e0b;
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+.status{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+#detalhes{
+    width:350px;
+    background:#0f172a;
+    border-left:2px solid #1e293b;
+    padding:20px;
+}
+
+#detalhes h2{
+    margin-bottom:20px;
+}
+
+.detalhe-box{
+    background:#1e293b;
+    padding:15px;
+    border-radius:10px;
+}

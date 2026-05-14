@@ -48,7 +48,7 @@ client.on('message', (topic, message) => {
         try {
             const dados = JSON.parse(msgStr);
             const idDoTopico = topic.split('/')[2]; 
-        const localNome = dados.local || idDoTopico;
+            const localNome = dados.local || idDoTopico;
 
         console.log(`---------------------------------------------------------------------------------------------`);
         console.log(`[${timestamp}]`);
